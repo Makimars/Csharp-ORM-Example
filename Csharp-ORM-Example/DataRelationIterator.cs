@@ -27,13 +27,17 @@ namespace Csharp_ORM_Example
             DataTable dt = new DataTable();
             using (var con = new SqlConnection(Repository.connString))
             {
-                using (var command = new SqlCommand(""))
+                con.Open();
+
+                using (SqlCommand command = new SqlCommand(this.sql_query, con))
                 {
                     using (SqlDataReader dr = command.ExecuteReader())
                     {
                         dt.Load(dr);
                     }
                 }
+
+                con.Close();
             }
 
             return dt;

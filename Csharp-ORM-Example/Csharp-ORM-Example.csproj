@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enities\Article.cs" />
+    <Compile Include="Entities\Article.cs" />
     <Compile Include="Repos\ArticlesRepository.cs" />
     <Compile Include="DataRelationIterator.cs" />
-    <Compile Include="Enities\Entity.cs" />
+    <Compile Include="Entities\Entity.cs" />
     <Compile Include="EntityList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -53,7 +53,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Repos\Repository.cs" />
-    <Compile Include="Enities\Seller.cs" />
+    <Compile Include="Entities\Seller.cs" />
     <Compile Include="Repos\SellersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
