@@ -7,7 +7,11 @@ namespace Csharp_ORM_Example
         protected string sql_query;
         protected Repository repository;
 
-        public EntityList(string table_name, Repository repository)
+        protected EntityList()
+        {
+
+        }
+        internal EntityList(string table_name, Repository repository)
         {
             this.sql_query = "SELECT * FROM " + table_name;
             this.repository = repository;
@@ -50,7 +54,14 @@ namespace Csharp_ORM_Example
 
         public DataRelationIterator toDataRelationIterator()
         {
-            throw new NotImplementedException();
+            DataRelationIterator iterator = new DataRelationIterator(this.sql_query, repository);
+
+            return iterator;
+        }
+
+        public string getQuery()
+        {
+            return this.sql_query;
         }
 
     }

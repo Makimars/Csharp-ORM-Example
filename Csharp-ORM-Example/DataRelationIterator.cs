@@ -5,13 +5,21 @@ namespace Csharp_ORM_Example
 {
     public class DataRelationIterator : EntityList
     {
-        public DataRelationIterator(string table_name, Repository repository) : base(table_name, repository) { }
+        internal DataRelationIterator(string sqlQuery, Repository repository)
+        {
+            this.sql_query = sqlQuery;
+            this.repository = repository;
+        }
 
-        public EntityList groupBy(string selectString, string groupByColumns)
+        public void groupBy(string selectString, string groupByColumns)
         {
             this.sql_query = "SELECT (" + selectString + ") FROM (" + this.sql_query + ") GROUP BY (" + groupByColumns + ");";
+        }
 
-            return this;
+        public void joinWith(EntityList iterator, string columnOnThis, string columnOnJoined)
+        {
+            this.sql_query = "SELECT * FROM (" + this.sql_query + ") AS primaryRelation JOIN (" + iterator.getQuery() + ") AS secondaryRelation ON primaryRelation." 
+                + columnOnThis + "=secondaryRelation." + columnOnJoined;
         }
 
         public new DataTable fetch()
