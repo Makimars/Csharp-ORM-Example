@@ -22,7 +22,6 @@ namespace Csharp_ORM_Example
 
         public EntityList getList()
         {
-            SqlConnection connection = new SqlConnection(connString);
             EntityList list = new EntityList(this.table_name, this);
 
             return list;
@@ -30,16 +29,15 @@ namespace Csharp_ORM_Example
 
         public Entity getEntityById(int id)
         {
-            SqlConnection connection = new SqlConnection(connString);
             EntityList list = new EntityList(this.table_name, this);
             list.setFilter("Id", id.ToString());
 
             return list.fetch()[0];
         }
 
-        public abstract void updateEntity(Entity entity);
+        internal abstract void updateEntity(Entity entity);
 
-        public abstract Entity[] getEntities(string query);
+        internal abstract Entity[] getEntities(string query);
 
     }
 }

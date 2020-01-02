@@ -19,7 +19,12 @@ namespace Csharp_ORM_Example
 
         public string Name { get => name; set => name = value; }
 
-        public static Seller[] fromReader(SqlDataReader reader)
+        /// <summary>
+        /// Creates new object from given SqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        internal static Seller[] fromReader(SqlDataReader reader)
         {
             List<Seller> entities = new List<Seller>();
 

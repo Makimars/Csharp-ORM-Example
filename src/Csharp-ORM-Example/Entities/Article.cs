@@ -5,7 +5,6 @@ namespace Csharp_ORM_Example
 {
     public class Article : Entity
     {
-
         int? seller_id;
         int? cost;
         string name;
@@ -25,7 +24,12 @@ namespace Csharp_ORM_Example
         public int? Seller_id { get => seller_id; set => seller_id = value; }
         public int? Cost { get => cost; set => cost = value; }
 
-        public static Article[] fromReader(SqlDataReader reader)
+        /// <summary>
+        /// Creates new object from given SqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        internal static Article[] fromReader(SqlDataReader reader)
         {
             List<Article> entities = new List<Article>();
 

@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Entities\Article.cs" />
     <Compile Include="Repos\ArticlesRepository.cs" />
-    <Compile Include="DataRelationIterator.cs" />
+    <Compile Include="DataList.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="EntityList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

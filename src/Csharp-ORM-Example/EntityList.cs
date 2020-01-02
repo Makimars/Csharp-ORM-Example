@@ -52,9 +52,9 @@ namespace Csharp_ORM_Example
             return this.repository.getEntities(this.sql_query);
         }
 
-        public DataRelationIterator toDataRelationIterator()
+        public DataList toDataRelationIterator()
         {
-            DataRelationIterator iterator = new DataRelationIterator(this.sql_query, repository);
+            DataList iterator = new DataList(this.sql_query, repository);
 
             return iterator;
         }

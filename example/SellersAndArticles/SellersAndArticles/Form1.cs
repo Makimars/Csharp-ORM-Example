@@ -15,17 +15,16 @@ namespace SellersAndArticles
 
         private void Button1_Click(object sender, EventArgs e)
         {
-
-            richTextBox1.Text = "";
+            richTextBox1.Clear();
 
             ArticlesRepository artRepo = ArticlesRepository.getInstance();
 
-            EntityList iterator = artRepo.getList();
-            /*
-            iterator.setLimit(3)
-                .setOrder("Id", Order.DESC);*/
+            EntityList list = artRepo.getList();
+            
+            list.setLimit(3)
+                .setOrder("Id", Order.DESC);
 
-            Article[] entities = (Article[])iterator.fetch();
+            Article[] entities = (Article[]) list.fetch();
 
             foreach (Article ar in entities)
             {
@@ -35,38 +34,38 @@ namespace SellersAndArticles
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            richTextBox1.Text = "";
+            richTextBox1.Clear();
 
             SellersRepository sellRepo = SellersRepository.getInstance();
 
-            EntityList sellIterator = sellRepo.getList();
-            sellIterator.setLimit(1); 
+            EntityList list = sellRepo.getList();
+
+            list.setLimit(1); 
                 
-            Seller[] sellers = (Seller[])sellIterator.fetch();
+            Seller[] sellers = (Seller[]) list.fetch();
             
-            foreach (Seller ar in sellers)
-            {
-                ar.Name = "zmena";
-                ar.save();
-                richTextBox1.Text += ar.Name + " " + ar.Id + "\n";
-            }
+            sellers[0].Name = "zmeneneJmeno";
+            sellers[0].save();
+            richTextBox1.Text += sellers[0].Name + " " + sellers[0].Id + "\n";
+            
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            richTextBox1.Text = "";
+            richTextBox1.Clear();
 
             SellersRepository sellRepo = SellersRepository.getInstance();
             ArticlesRepository artRepo = ArticlesRepository.getInstance();
 
-            EntityList sellIterator = sellRepo.getList();
-            EntityList artIterator = artRepo.getList();
+            EntityList sellerList = sellRepo.getList();
+            EntityList articleList = artRepo.getList();
 
-            DataRelationIterator dataRel = sellIterator.toDataRelationIterator();
+            DataList dataRel = sellerList.toDataRelationIterator();
 
-            dataRel.joinWith(artIterator, "Id", "seller_id");
+            dataRel.joinWith(articleList, "Id", "seller_id");
 
             DataTable dt = dataRel.fetch();
+
             DataRowCollection rows = dt.Rows;
             DataColumnCollection columns = dt.Columns;
 
@@ -81,9 +80,7 @@ namespace SellersAndArticles
 
             for (int i = 0; i < rows.Count; i++)
             {
-                DataRow row = rows[i];
-
-                var items = row.ItemArray;
+                object[] items = rows[i].ItemArray;
 
                 for (int a = 0; a < items.Length; a++)
                 {

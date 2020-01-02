@@ -1,4 +1,5 @@
-﻿namespace Csharp_ORM_Example
+﻿
+namespace Csharp_ORM_Example
 {
     public abstract class Entity
     {

@@ -41,7 +41,7 @@ namespace Csharp_ORM_Example
             return article;
         }
 
-        public override void updateEntity(Entity entity)
+        internal override void updateEntity(Entity entity)
         {
             Article article = (Article)entity;
 
@@ -60,7 +60,7 @@ namespace Csharp_ORM_Example
             }
         }
 
-        public override Entity[] getEntities(string query)
+        internal override Entity[] getEntities(string query)
         {
             Article[] articles;
 

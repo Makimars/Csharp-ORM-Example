@@ -3,9 +3,9 @@ using System.Data.SqlClient;
 
 namespace Csharp_ORM_Example
 {
-    public class DataRelationIterator : EntityList
+    public class DataList : EntityList
     {
-        internal DataRelationIterator(string sqlQuery, Repository repository)
+        internal DataList(string sqlQuery, Repository repository)
         {
             this.sql_query = sqlQuery;
             this.repository = repository;
