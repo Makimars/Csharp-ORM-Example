@@ -20,9 +20,6 @@ namespace SellersAndArticles
             ArticlesRepository artRepo = ArticlesRepository.getInstance();
 
             EntityList list = artRepo.getList();
-            
-            list.setLimit(3)
-                .setOrder("Id", Order.DESC);
 
             Article[] entities = (Article[]) list.fetch();
 
@@ -40,13 +37,12 @@ namespace SellersAndArticles
 
             EntityList list = sellRepo.getList();
 
-            list.setLimit(1); 
-                
             Seller[] sellers = (Seller[]) list.fetch();
             
-            sellers[0].Name = "zmeneneJmeno";
-            sellers[0].save();
-            richTextBox1.Text += sellers[0].Name + " " + sellers[0].Id + "\n";
+            foreach(Seller s in sellers)
+            {
+                richTextBox1.Text += s.Name + " " + s.Id + "\n";
+            }
             
         }
 
@@ -60,7 +56,7 @@ namespace SellersAndArticles
             EntityList sellerList = sellRepo.getList();
             EntityList articleList = artRepo.getList();
 
-            DataList dataRel = sellerList.toDataRelationIterator();
+            DataList dataRel = sellerList.toDataList();
 
             dataRel.joinWith(articleList, "Id", "seller_id");
 
@@ -90,6 +86,48 @@ namespace SellersAndArticles
                 richTextBox1.Text += "\n";
             }
 
+        }
+        private void Button4_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
+
+            StorageRepository storageRepo = StorageRepository.getInstance();
+
+            EntityList list = storageRepo.getList();
+
+            Storage[] storage = (Storage[])list.fetch();
+
+            foreach (Storage s in storage)
+            {
+                richTextBox1.Text += s.Id + " " + s.ArticleId + " " + s.Amount + "\n";
+            }
+        }
+
+        private void Button5_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
+
+            TransactionsRepository tranRepo = TransactionsRepository.getInstance();
+
+            EntityList list = tranRepo.getList();
+
+            Transaction[] transactions = (Transaction[])list.fetch();
+
+            foreach (Transaction t in transactions)
+            {
+                richTextBox1.Text += t.Id + " " + t.ArticleId + " " + t.Amount + "\n";
+            }
+        }
+
+        private void Button6_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
+
+            SellersRepository sellRepo = SellersRepository.getInstance();
+            ArticlesRepository artRepo = ArticlesRepository.getInstance();
+
+            Seller s = (Seller)sellRepo.getEntityById(1);
+            richTextBox1.Text = s.Name;
         }
     }
 }

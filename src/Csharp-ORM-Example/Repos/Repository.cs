@@ -39,5 +39,25 @@ namespace Csharp_ORM_Example
 
         internal abstract Entity[] getEntities(string query);
 
+        protected Entity[] getEntities<T>(string query)
+        {
+            if (typeof(T).BaseType != typeof(Entity))
+                throw new System.Exception("Cannot get entity " + typeof(T));
+            
+            Entity[] entities;
+
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                con.Open();
+                using (SqlCommand command = new SqlCommand(query, con))
+                {
+                    entities = Entity.fromReader<T>(command.ExecuteReader());
+                }
+                con.Close();
+            }
+
+            return entities;
+        }
+
     }
 }

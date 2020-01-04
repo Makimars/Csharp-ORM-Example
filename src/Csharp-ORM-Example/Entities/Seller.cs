@@ -7,11 +7,6 @@ namespace Csharp_ORM_Example
     {
         private string name;
 
-        public Seller(int id, Repository parent_repository) : base(id, parent_repository)
-        {
-
-        }
-
         protected Seller(int id, string name, Repository parentRepository) : base(id, parentRepository)
         {
             this.name = name;

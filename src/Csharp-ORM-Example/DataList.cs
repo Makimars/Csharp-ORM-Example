@@ -25,7 +25,7 @@ namespace Csharp_ORM_Example
         public new DataTable fetch()
         {
             DataTable dt = new DataTable();
-            using (var con = new SqlConnection(Repository.connString))
+            using (SqlConnection con = new SqlConnection(Repository.connString))
             {
                 con.Open();
 

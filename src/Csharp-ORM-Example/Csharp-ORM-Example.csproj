@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Article.cs" />
+    <Compile Include="Entities\Storage.cs" />
+    <Compile Include="Entities\Transaction.cs" />
     <Compile Include="Repos\ArticlesRepository.cs" />
     <Compile Include="DataList.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -55,6 +57,8 @@
     <Compile Include="Repos\Repository.cs" />
     <Compile Include="Entities\Seller.cs" />
     <Compile Include="Repos\SellersRepository.cs" />
+    <Compile Include="Repos\StorageRepository.cs" />
+    <Compile Include="Repos\TransactionsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

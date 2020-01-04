@@ -2,26 +2,27 @@
 
 namespace Csharp_ORM_Example
 {
-    public class SellersRepository : Repository
+    public class TransactionsRepository : Repository
     {
-        protected SellersRepository(string table_name, string primary_key) : base(table_name, primary_key)
+        protected TransactionsRepository(string tableName, string primaryKey) : base(tableName, primaryKey)
         {
         }
 
-        private static SellersRepository instance;
-        public static SellersRepository getInstance()
-        {
-            if (SellersRepository.instance == null)
-                SellersRepository.instance = new SellersRepository("sellers", "id");
+        private static TransactionsRepository instance;
 
-            return SellersRepository.instance;
+        public static TransactionsRepository getInstance()
+        {
+            if (TransactionsRepository.instance == null)
+                TransactionsRepository.instance = new TransactionsRepository("transactions", "Id");
+
+            return TransactionsRepository.instance;
         }
 
-        public Seller createNewEntity()
+        public Transaction createNewEntity()
         {
             string query = "INSERT INTO " + table_name +
-                " (name)" +
-                "VALUES ('')";
+                " (amount)" +
+                "VALUES (0)";
 
             using (SqlConnection con = new SqlConnection(connString))
             {
@@ -33,24 +34,25 @@ namespace Csharp_ORM_Example
                 con.Close();
             }
 
-            Seller seller = (Seller)this.getList()
+            Transaction transaction = (Transaction)this.getList()
                 .setOrder(primary_key, Order.DESC)
                 .setLimit(1)
                 .fetch()[0];
 
-            return seller;
+            return transaction;
         }
 
         internal override void updateEntity(Entity entity)
         {
-            if (entity.GetType() != typeof(Seller))
+            if (entity.GetType() != typeof(Transaction))
                 throw new System.Exception("Cannot update type " + entity.GetType());
 
-            Seller seller = (Seller)entity;
+            Transaction transaction = (Transaction)entity;
 
             string query = "UPDATE " + table_name +
-                " SET name = '" + seller.Name +
-                "' WHERE " + this.primary_key + " = " + entity.Id;
+                " SET amount = " + transaction.Amount +
+                ", article_id = " + transaction.ArticleId +
+                " WHERE " + this.primary_key + " = " + entity.Id;
 
             using (SqlConnection con = new SqlConnection(connString))
             {
@@ -65,7 +67,7 @@ namespace Csharp_ORM_Example
 
         internal override Entity[] getEntities(string query)
         {
-            return getEntities<Seller>(query);
+            return getEntities<Transaction>(query);
         }
     }
 }

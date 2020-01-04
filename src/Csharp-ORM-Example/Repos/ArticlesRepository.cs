@@ -43,11 +43,16 @@ namespace Csharp_ORM_Example
 
         internal override void updateEntity(Entity entity)
         {
+            if (entity.GetType() != typeof(Article))
+                throw new System.Exception("Cannot update type " + entity.GetType());
+
             Article article = (Article)entity;
 
             string query = "UPDATE " + table_name + 
-                " SET seller_id = " + article.Seller_id + ", cost = " + article.Cost + ", name = '" + article.Name +
-                "' WHERE Id = " + entity.Id;
+                " SET seller_id = " + article.Seller_id + 
+                ", cost = " + article.Cost + 
+                ", name = '" + article.Name +
+                "' WHERE " + this.primary_key + " = " + entity.Id;
 
             using (SqlConnection con = new SqlConnection(connString))
             {
@@ -62,19 +67,7 @@ namespace Csharp_ORM_Example
 
         internal override Entity[] getEntities(string query)
         {
-            Article[] articles;
-
-            using (SqlConnection con = new SqlConnection(connString))
-            {
-                con.Open();
-                using (SqlCommand command = new SqlCommand(query, con))
-                {
-                    articles = Article.fromReader(command.ExecuteReader());
-                }
-                con.Close();
-            }
-
-            return articles;
+            return getEntities<Article>(query);
         }
     }
 }

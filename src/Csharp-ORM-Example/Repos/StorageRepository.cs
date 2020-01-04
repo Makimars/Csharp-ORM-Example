@@ -2,26 +2,28 @@
 
 namespace Csharp_ORM_Example
 {
-    public class SellersRepository : Repository
+    public class StorageRepository : Repository
     {
-        protected SellersRepository(string table_name, string primary_key) : base(table_name, primary_key)
+
+        protected StorageRepository(string table_name, string primary_key) : base(table_name, primary_key)
         {
         }
 
-        private static SellersRepository instance;
-        public static SellersRepository getInstance()
-        {
-            if (SellersRepository.instance == null)
-                SellersRepository.instance = new SellersRepository("sellers", "id");
+        private static StorageRepository instance;
 
-            return SellersRepository.instance;
+        public static StorageRepository getInstance()
+        {
+            if (StorageRepository.instance == null)
+                StorageRepository.instance = new StorageRepository("storage", "id");
+
+            return StorageRepository.instance;
         }
 
-        public Seller createNewEntity()
+        public Storage createNewEntity()
         {
             string query = "INSERT INTO " + table_name +
-                " (name)" +
-                "VALUES ('')";
+                " (amount)" +
+                "VALUES (0)";
 
             using (SqlConnection con = new SqlConnection(connString))
             {
@@ -33,24 +35,25 @@ namespace Csharp_ORM_Example
                 con.Close();
             }
 
-            Seller seller = (Seller)this.getList()
+            Storage storage = (Storage)this.getList()
                 .setOrder(primary_key, Order.DESC)
                 .setLimit(1)
                 .fetch()[0];
 
-            return seller;
+            return storage;
         }
 
         internal override void updateEntity(Entity entity)
         {
-            if (entity.GetType() != typeof(Seller))
+            if (entity.GetType() != typeof(Storage))
                 throw new System.Exception("Cannot update type " + entity.GetType());
 
-            Seller seller = (Seller)entity;
+            Storage storage = (Storage)entity;
 
             string query = "UPDATE " + table_name +
-                " SET name = '" + seller.Name +
-                "' WHERE " + this.primary_key + " = " + entity.Id;
+                " SET amount = " + storage.Amount +
+                ", article_id = " + storage.ArticleId +
+                " WHERE " + this.primary_key + " = " + entity.Id;
 
             using (SqlConnection con = new SqlConnection(connString))
             {
@@ -65,7 +68,7 @@ namespace Csharp_ORM_Example
 
         internal override Entity[] getEntities(string query)
         {
-            return getEntities<Seller>(query);
+            return getEntities<Storage>(query);
         }
     }
 }

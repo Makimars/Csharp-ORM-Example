@@ -1,4 +1,5 @@
-﻿
+﻿using System.Data.SqlClient;
+
 namespace Csharp_ORM_Example
 {
     public abstract class Entity
@@ -17,6 +18,20 @@ namespace Csharp_ORM_Example
         public void save()
         {
             parentRepository.updateEntity(this);
+        }
+
+        internal static Entity[] fromReader<T>(SqlDataReader reader)
+        {
+            if(typeof(T) == typeof(Article))
+                return Article.fromReader(reader);
+            if (typeof(T) == typeof(Seller))
+                return Seller.fromReader(reader);
+            if (typeof(T) == typeof(Storage))
+                return Storage.fromReader(reader);
+            if (typeof(T) == typeof(Transaction))
+                return Transaction.fromReader(reader);
+
+            throw new System.Exception("Invalid type passed, type: " + typeof(T));
         }
     }
 }

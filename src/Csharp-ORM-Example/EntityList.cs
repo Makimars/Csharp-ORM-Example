@@ -19,7 +19,7 @@ namespace Csharp_ORM_Example
 
         public EntityList setFilter(string column, string value)
         {
-            this.sql_query = "SELECT * FROM (" + this.sql_query + ") AS previousQuery WHERE " + column + " = " + value;
+            this.sql_query = "SELECT * FROM (" + this.sql_query + ") AS previousQuery WHERE " + column + " = '" + value + "'";
             
             return this;
         }
@@ -52,7 +52,7 @@ namespace Csharp_ORM_Example
             return this.repository.getEntities(this.sql_query);
         }
 
-        public DataList toDataRelationIterator()
+        public DataList toDataList()
         {
             DataList iterator = new DataList(this.sql_query, repository);
 
